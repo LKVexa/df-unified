@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+reports/*
+!reports/README.md
+ui/DF-VM-Technical-Institute-*.exe
+ui/DF-VM-Technical-Institute-Diagnostic-*.txt
+ui/build/*.zip
+ui/build/*.log
+ui/build/*.generated.cs
+ui/build/DFVMTI-*.exe

@@ -1,0 +1,150 @@
+{
+  "schema": "DF/UNIFIED/1",
+  "unified_version": "1.0.0",
+  "df_release": "DF-PA21.2-1.0.0",
+  "system_id": "DFU0",
+  "name": "DF Unified System",
+  "assembled_utc": "2026-09-23",
+  "design": "One door over five sealed containers. Members stay byte-for-byte where they are (sealed SHA256SUMS/MANIFEST are not rewritten); DF_Unified binds them by relative path, proves the shared adapter/core are one artifact, accounts for every unsealed overlay, and drives node and fabric batteries from a single CLI and console.",
+  "rule": "No item is operational because its source file exists. Operational status requires native executable evidence satisfying that item's promotion gate.",
+  "locate": "members are found beside DF_Unified (../DF_*), or under --root / DF_UNIFIED_ROOT",
+  "members": [
+    {
+      "container": "DF_Small",
+      "role": "node",
+      "id": "N_SMALL",
+      "embedded": "BOTTLE ROCKET 3.0.0-MODEL",
+      "dialect": "MSSL/ASM-1",
+      "domain": "D_BR",
+      "summary": "Compact C11 reference VM; APDU/1 device path; Ed25519 signed images",
+      "relative_path": "../DF_Small",
+      "vm_package_dir": "BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K",
+      "pins": {
+        "sums_sha256": "678af90252316c8a3c69e9de3665048513c997e372baf5761ab9d894873b3d89",
+        "manifest_sha256": "70c8896112cff4bb07ba284cd0622f0a7c6aa7d05e3acc2f2310d1ea0573e7bf"
+      }
+    },
+    {
+      "container": "DF_Medium",
+      "role": "node",
+      "id": "N_MEDIUM",
+      "embedded": "BOTTLE ROCKET 5.0.0 (ISA 4.1) qualification candidate",
+      "dialect": "LCTLC/1.1",
+      "domain": "D_BR",
+      "summary": "Frozen 4.7.0 core, Device ABI 1.0 (8 classes), immutable release manifest",
+      "relative_path": "../DF_Medium",
+      "vm_package_dir": "BOTTLE_ROCKET_5.0.0_VM_110K_RC",
+      "pins": {
+        "sums_sha256": "d929ed7a5d70e6c3147c93d44e2f8c8381272dc983f053cc5447dc17cddda371",
+        "manifest_sha256": "1f514b6c035468aa73450b0a054489c73e12b77b0a62f8690c708dfea4828bca"
+      }
+    },
+    {
+      "container": "DF_Large",
+      "role": "node",
+      "id": "N_LARGE",
+      "embedded": "BOTTLE ROCKET 4.7.0 (BR/1.1, 61K) device/I-O/service architecture",
+      "dialect": "LCTLC/1.2",
+      "domain": "D_BR",
+      "summary": "Device ABI 1.0 with 22 services; BRTM/1 trust design",
+      "relative_path": "../DF_Large",
+      "vm_package_dir": "BOTTLE_ROCKET_4.7.0_COLUMNED_LCTL_VIRTUAL_DEVICE_IO_SERVICE_ARCHITECTURE_61K",
+      "pins": {
+        "sums_sha256": "eeb3bd43e6600d6c4a0795c018c08944b2133bb70819d9b0520244bbe088ac0f",
+        "manifest_sha256": "1baedbd9b536d06259e314845186e8c4ce2a04eddba4de6d611620e128cf79b5"
+      }
+    },
+    {
+      "container": "DF_Xtra_Large",
+      "role": "node",
+      "id": "N_XLARGE",
+      "embedded": "QUORUM VM 5.0.0-candidate inside QUORUM LCTL/MSSL 2.1.0",
+      "dialect": "LCTLC/1.0",
+      "domain": "D_QVM",
+      "summary": "Python-hosted QVM, RC-PW world services, per-step state hashing",
+      "relative_path": "../DF_Xtra_Large",
+      "vm_package_dir": "QUORUM_LCTL_MSSL_2.1.0",
+      "pins": {
+        "sums_sha256": "3a8e12c0fcc677d62c6f29e7df105ebd93c2385a166539ab9d7bd370126272c2",
+        "manifest_sha256": "4d45a763e642ee218da13fbf1e50ef97018538d66d042699e147c2dac26b58c4"
+      }
+    },
+    {
+      "container": "DF_Fabric",
+      "role": "control_plane",
+      "id": "DF0",
+      "embedded": "DF0 federation (replica / pipeline / BSP)",
+      "dialect": null,
+      "domain": null,
+      "summary": "Holds no VM: federation, fabric runtime, shared core, dialect bridge",
+      "relative_path": "../DF_Fabric",
+      "vm_package_dir": null,
+      "pins": {
+        "sums_sha256": "4e7df0583f8764be600b707fec43f06224deca3423b345ec28a1cb93de00dad9",
+        "manifest_sha256": "8a9a1a421b6e5960d30c6b12ac41b76229f3a7f19a3fd83ff2abf3b2c72ea770"
+      }
+    }
+  ],
+  "planes": {
+    "control": [
+      "DF_Fabric (DF0 federation, fabric runtime, gates)",
+      "DF_Unified (registry, integrity, orchestration, console)"
+    ],
+    "execution": [
+      "N_SMALL",
+      "N_MEDIUM",
+      "N_LARGE",
+      "N_XLARGE"
+    ],
+    "overlay": [
+      "DF_Fabric/PHOTON (VENDORED_UNBOUND)",
+      "DF_Fabric/pk (Post-Kubernetes components)"
+    ]
+  },
+  "shared_artifacts": {
+    "adapter": "adapter/dfabric/*.py",
+    "core": "core/ (tree, excluding caches)",
+    "core_digest_file": "core/PACORE_DIGEST.json"
+  },
+  "overlays": [
+    {
+      "container": "DF_Fabric",
+      "prefix": "PHOTON/",
+      "kind": "vendored_overlay",
+      "status": "VENDORED_UNBOUND",
+      "note": "VEC1 Photon control plane + shell, integrated 2026-09-22; added after the seal, so outside MANIFEST.json. Unbound by design: no attestation, build or workload promotion through it."
+    },
+    {
+      "container": "DF_Fabric",
+      "prefix": "PHOTON.cmd",
+      "kind": "vendored_overlay",
+      "status": "VENDORED_UNBOUND",
+      "note": "Photon dispatch launcher"
+    },
+    {
+      "container": "DF_Fabric",
+      "prefix": "PHOTON.sh",
+      "kind": "vendored_overlay",
+      "status": "VENDORED_UNBOUND",
+      "note": "Photon dispatch launcher"
+    },
+    {
+      "container": "DF_Fabric",
+      "prefix": "pk/",
+      "kind": "applied_components",
+      "status": "APPLIED_UNSEALED",
+      "note": "Post-Kubernetes Master Series batches 1-6 (6 owned + 89 dependency components); added after the seal."
+    }
+  ],
+  "topology": {
+    "federation": "DF0",
+    "links": "full mesh of 6 classical_channel links, local_process transport, alpha 1 tick, beta 1e6 B/tick (DF_Fabric/fabric/TOPOLOGY.json)"
+  },
+  "claim_boundary": [
+    "NETWORK=deny, BACKEND=none; one host, local processes; distributed_state <= DISTRIBUTED_CLASSICAL_EMULATION",
+    "No node has a qubit; PHYSICAL_*_QPU_EXECUTION stay BLOCKED_EXTERNAL_AUTHORITY",
+    "Images are not portable between nodes; the fabric moves sealed rows and lowers per node",
+    "Every member blocker is inherited verbatim; DF_Unified lifts none"
+  ],
+  "console": "ui/ (DF VM Technical Institute v2.1.2 + Unified System page)"
+}

@@ -1,0 +1,6 @@
+#!/bin/sh
+# DF_Unified/CONSOLE -- df_unified console (offline; NETWORK=deny)
+set -eu
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+PY="${PYTHON:-python3}"
+exec "$PY" -B "$ROOT/df_unified/cli.py" console "$@"
